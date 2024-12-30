@@ -57,7 +57,7 @@ if UPGRADE_PACKAGES.lower() == 'true':
     packages = [dist.project_name for dist in working_set]
     scall("uv pip install --system " + ' '.join(packages), shell=True)
 
-UPSTREAM_REPO = environ.get('UPSTREAM_REPO', 'https://gitlab.com/Jot4349/WZML-X-ADVANCE')
+UPSTREAM_REPO = environ.get('UPSTREAM_REPO', 'https://github.com/jattsbots/PBX1-LEECH')
 if len(UPSTREAM_REPO) == 0:
     UPSTREAM_REPO = None
 
