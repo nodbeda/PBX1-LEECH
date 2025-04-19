@@ -38,7 +38,8 @@ pymongo
 pyrofork==2.3.53
 quoters
 qbittorrent-api
-requests
+requests 
+random
 speedtest-cli
 telegraph
 tenacity
