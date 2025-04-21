@@ -1,26 +1,15 @@
 from random import choice
-
 from bot import LOGGER, bot
-
 
 async def send_react(message):
     try:
         chat_id = int(message.chat.id)
         chat_info = await bot.get_chat(chat_id)
-        available_reactions = chat_info.available_reactions
+        available_reactions = getattr(chat_info, "available_reactions", None)
 
         full_emoji_set = {
-            "👌",
-            "🔥",
-            "🥰",
-            "❤️",
-            "❤️‍🔥",
-            "💯",
-            "⚡",
-            "💋",
-            "😘",
-            "🤩",
-            "😍",
+            "👌", "🔥", "🥰", "❤️", "❤️‍🔥",
+            "💯", "⚡", "💋", "😘", "🤩", "😍",
         }
 
         if available_reactions:
@@ -28,13 +17,16 @@ async def send_react(message):
                 emojis = full_emoji_set
             else:
                 emojis = {
-                    reaction.emoji for reaction in available_reactions.reactions
+                    r.emoji for r in available_reactions.reactions or []
                 }
 
-            await message.react(choice(list(emojis)), big=True)
-    except AttributeError as e:
-        LOGGER.error(f"AttributeError: {e}")
-    except TypeError as e:
-        LOGGER.error(f"TypeError: {e}")
+            if emojis:
+                selected = choice(list(emojis))
+                await message.react(selected, big=True)
+                LOGGER.info(f"Reacted with: {selected}")
+            else:
+                LOGGER.warning("No emojis available for reaction.")
+        else:
+            LOGGER.warning("Reactions not available for this chat.")
     except Exception as e:
-        LOGGER.error(f"An unexpected error occurred: {e}")
+        LOGGER.error(f"send_react error: {e}")
