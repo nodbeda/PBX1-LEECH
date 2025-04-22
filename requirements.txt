@@ -39,7 +39,6 @@ pyrofork==2.3.53
 quoters
 qbittorrent-api
 requests 
-random
 speedtest-cli
 telegraph
 tenacity
